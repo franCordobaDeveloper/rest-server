@@ -15,6 +15,8 @@ class Server {
         // API Usuarios
         this.usuariosPath = '/api/usuarios';
 
+        this.authPath = '/api/auth';
+        
         // Conectar a base de datos
         this.conectarDB();
 
@@ -50,6 +52,9 @@ class Server {
 
         this.app.use( this.usuariosPath , require('../routes/usuarios') );
 
+
+        // ruta de autenticacion
+        this.app.use( this.authPath, require('../routes/auth') );
         
     }
 
