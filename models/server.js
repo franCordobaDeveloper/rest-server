@@ -12,11 +12,15 @@ class Server {
         this.port = process.env.PORT;
 
 
-        // API Usuarios
-        this.usuariosPath = '/api/usuarios';
+        // rutas
+        this.paths = {
+            auth:       '/api/auth',
+            buscar:     '/api/buscar',
+            categorias: '/api/categorias',
+            productos: '/api/productos',
+            usuarios:   '/api/usuarios',
+        }
 
-        this.authPath = '/api/auth';
-        
         // Conectar a base de datos
         this.conectarDB();
 
@@ -50,11 +54,15 @@ class Server {
     // Metodos
     routes() {
 
-        this.app.use( this.usuariosPath , require('../routes/usuarios') );
+        this.app.use( this.paths.usuarios ,  require('../routes/usuarios') );
+        this.app.use( this.paths.categorias, require('../routes/categorias') );
+        this.app.use( this.paths.productos,  require('../routes/productos') );
 
-
+        // ruta de busqueda
+        this.app.use( this.paths.buscar,     require('../routes/buscar') );
+        
         // ruta de autenticacion
-        this.app.use( this.authPath, require('../routes/auth') );
+        this.app.use( this.paths.auth,       require('../routes/auth') );
         
     }
 
